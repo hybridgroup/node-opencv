@@ -69,13 +69,12 @@ script:
   # enable 32 bit node
   - export PATH=$(pwd)/node-${NVER}-${platform}-x86/bin:$PATH
   # install 32 bit compiler toolchain and X11
-  - if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install gcc-multilib g++-multilib; fi
+  # - if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install gcc-multilib g++-multilib; fi
   # install dependencies for 32 bit version
-  - sudo apt-get install ia32-libs-multiarch
-  - sudo apt-get install ia32-libs
-  - sudo apt-get install libcv-dev:i386
-  - sudo apt-get install libopencv-dev:i386
-  - sudo apt-get install libhighgui-dev:i386
+  - sudo apt-get -y install gcc-multilib g++-multilib
+  - sudo apt-get -y install libcv-dev:i386
+  - sudo apt-get -y install libopencv-dev:i386
+  - sudo apt-get -y install libhighgui-dev:i386
   # test source compile in 32 bit mode
   - if [[ "$platform" == 'linux' ]]; then CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source; else npm install --build-from-source; fi
   # test compiled 32 bit version
