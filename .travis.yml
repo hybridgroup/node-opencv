@@ -71,6 +71,7 @@ script:
   # install 32 bit compiler toolchain and X11
   # - if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install gcc-multilib g++-multilib; fi
   # install dependencies for 32 bit version
+  - sudo apt-get install -qq --force-yes ia32-libs ia32-libs-multiarch
   - sudo apt-get -y install gcc-multilib g++-multilib
   - sudo apt-get -y install libcv-dev:i386
   - sudo apt-get -y install libopencv-dev:i386
