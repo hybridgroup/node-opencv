@@ -24,15 +24,18 @@ before_install:
 - if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true;
   fi;
 - platform=$(uname -s | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/")
+
 install:
 - npm install --build-from-source
 - npm test
 - node lib/opencv.js
+
 before_script:
 - echo "Publishing native platform Binary Package? ->" $PUBLISH_BINARY
 - if [[ $PUBLISH_BINARY == true ]]; then node-pre-gyp package publish; fi;
 - node-pre-gyp clean
 - node-gyp clean
+
 script:
 - INSTALL_RESULT=0
 - if [[ $PUBLISH_BINARY == true ]]; then INSTALL_RESULT=$(npm install --fallback-to-build=false
@@ -52,5 +55,6 @@ script:
 - node lib/opencv.js
 - echo "Publishing x86 32bit Binary Package? ->" $PUBLISH_BINARY
 - if [[ $PUBLISH_BINARY == true ]]; then node-pre-gyp package publish; fi;
+
 after_success:
 - node-pre-gyp info
