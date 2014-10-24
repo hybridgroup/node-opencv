@@ -1,5 +1,5 @@
 # environment variables
-environment:
+#environment:
   #node_pre_gyp_secretAccessKey:
   #secure: wJRlPhmqDgwxllTxhhG5JJosBf3nKYxcXO6NfGnrUUnxmECHeNTsBrldqW8+EjyK
   #node_pre_gyp_accessKeyId:
