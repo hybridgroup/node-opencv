@@ -39,17 +39,17 @@ install:
   - cmd: call nodist update
   - cmd: call nodist stable
   - cmd: npm install -g node-gyp
+  - cmd: npm install node-pre-gyp
+  - cmd: npm install aws-sdk
+  - cmd: SET PATH=%cd%\node_modules\.bin\;%PATH%
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmd: ECHO "BUILDING binary package:"
   - cmd: npm install --build-from-source
-  - cmd: SET PATH=%cd%\node_modules\.bin\;%PATH%
   - cmd: npm test
   - cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH binary package:"
-  - cmd: node-pre-gyp clean
-  - cmd: npm install aws-sdk
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
   - cmd: node-pre-gyp clean
   - cmd: node-gyp clean
