@@ -41,7 +41,9 @@ install:
   - cmd: npm install -g node-gyp
   - cmd: npm install node-pre-gyp
   - cmd: npm install aws-sdk
-  - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;%PATH%
+  - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%PATH%
+  - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
+
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
