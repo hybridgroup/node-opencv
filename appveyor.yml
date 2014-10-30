@@ -5,6 +5,8 @@
   #node_pre_gyp_accessKeyId:
   #secure: cgGBaLa6xiPo5duak1/xU5hxPCn1aUQqkQQZf27QQp0=
 
+# try on unstable version of the server to build node-opencv
+os: unstable
 
 # to add several platforms to build matrix:
 platform:
