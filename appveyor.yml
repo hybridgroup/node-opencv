@@ -14,8 +14,8 @@ platform:
   - x64
 
 install:
-  - cmd: ECHO "INSTALL OPENCV:"
-  - cmd: choco install OpenCV
+  #- cmd: ECHO "INSTALL OPENCV:"
+  #- cmd: choco install OpenCV
   - cmd: ECHO "APPVEYOR_REPO_COMMIT_MESSAGE ->"
   - cmd: ECHO %APPVEYOR_REPO_COMMIT_MESSAGE%
   - cmd: SET COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
@@ -40,32 +40,35 @@ install:
   #- cmd: SET NODIST_X64=0
   - cmd: call nodist update
   - cmd: call nodist stable
-  - cmd: npm install -g node-gyp
-  - cmd: npm install node-pre-gyp
-  - cmd: npm install aws-sdk
+  #- cmd: npm install -g node-gyp
+  #- cmd: npm install node-pre-gyp
+  #- cmd: npm install aws-sdk
   - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%PATH%
   - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
+  - cmd: dir C:\MinGW
+  - cmd: dir C:\GTK
+  - cmd: dir C:\msys
 
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmd: ECHO "BUILDING binary package:"
-  - cmd: npm install --build-from-source
-  - cmd: npm test
-  - cmd: node lib/opencv.js
+  #- cmd: npm install --build-from-source
+  #- cmd: npm test
+  #- cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH binary package:"
-  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
-  - cmd: node-pre-gyp clean
-  - cmd: node-gyp clean
-  - cmd: rmdir /q /s node_modules
+  #- cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
+  #- cmd: node-pre-gyp clean
+  #- cmd: node-gyp clean
+  #- cmd: rmdir /q /s node_modules
 
 on_success:
   # test installing from binary package works
-  - cmd: ECHO "ON SUCCESS:"
-  - cmd: ECHO "Try installing from binary:"
-  - cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
+  #- cmd: ECHO "ON SUCCESS:"
+  #- cmd: ECHO "Try installing from binary:"
+  #- cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
   # Print Available Binaries
-  - cmd: node-pre-gyp info
+  #- cmd: node-pre-gyp info
 
 test: OFF
 
