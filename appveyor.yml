@@ -73,6 +73,7 @@ after_build:
   - cmd: SET ARCH=x86
   - cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
   - cmd: SET PATH=%OPENCV_DIR%;%PATH%
+  - cmd: SET NODIST_X64=0
   - cmd: call nodist update
   - cmd: call nodist stable
   - cmd: npm install -g node-gyp
