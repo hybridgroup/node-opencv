@@ -47,6 +47,7 @@ install:
   - cmd: SET PATH=C:\OpenCV\opencv\buil;%PATH%
   - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
   - cmd: dir C:\GTK\lib\pkgconfig
+  - cmd: dir C:\OpenCV
   # Here we need to copy the opencv.pc file from the repo into PKG_CONFIG_PATH
   # trick part is to check for the vc12 folder and use that one
   - cmd: copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig\opencv.pc
@@ -56,7 +57,7 @@ install:
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmd: ECHO "BUILDING binary package:"
-  - cmd: npm install --build-from-source
+  - cmd: npm install --build-from-source --msvs_version=2013
   - cmd: npm test
   - cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH binary package:"
