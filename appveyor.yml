@@ -14,8 +14,8 @@ platform:
   - x64
 
 install:
-  - cmd: ECHO "INSTALL OPENCV:"
-  - cmd: choco install OpenCV
+  #- cmd: ECHO "INSTALL OPENCV:"
+  #- cmd: choco install OpenCV
   - cmd: ECHO "APPVEYOR_REPO_COMMIT_MESSAGE ->"
   - cmd: ECHO %APPVEYOR_REPO_COMMIT_MESSAGE%
   - cmd: SET COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
@@ -34,49 +34,49 @@ install:
   - cmd: IF not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% SET PUBLISH_BINARY=true
   - cmd: ECHO "Env Var PUBLISH_BINARY:"
   - cmd: ECHO %PUBLISH_BINARY%
-  - cmd: git clone https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
-  - cmd: SET PATH=C:\nodist\bin;%PATH%
-  - cmd: SET NODIST_PREFIX=C:\nodist
+  #- cmd: git clone https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
+  #- cmd: SET PATH=C:\nodist\bin;%PATH%
+  #- cmd: SET NODIST_PREFIX=C:\nodist
+  - cmd: ECHO %PROCESSOR_ARCHITECTURE%
   - cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (SET NODIST_X64=0) ELSE (SET NODIST_X64=1)
-  - cmd: call nodist update
-  - cmd: call nodist stable
-  - cmd: npm install -g node-gyp
+  #- cmd: call nodist update
+  #- cmd: call nodist stable
+  #- cmd: npm install -g node-gyp
   #- cmd: npm install node-pre-gyp
-  - cmd: npm install aws-sdk
-  - cmd: SET APP_PATH=%CD%
-  - cmd: IF EXIST C:\OpenCV* CD C:\OpenCV*
-  - cmd: SET OPENCV_ROOT_PATH=%CD%\opencv
-  - cmd: CD %APP_PATH%
-  - cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\x64\vc12\bin
-  - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%OPENCV_DIR%;%PATH%
-  - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
+  #- cmd: npm install aws-sdk
+  #- cmd: SET APP_PATH=%CD%
+  #- cmd: IF EXIST C:\OpenCV* CD C:\OpenCV*
+  #- cmd: SET OPENCV_ROOT_PATH=%CD%\opencv
+  #- cmd: CD %APP_PATH%
+  #- cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (SET ARCH=x86) ELSE (SET ARCH=x64)
+  #- cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
+  #- cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%OPENCV_DIR%;%PATH%
+  #- cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
   # Here we need to copy the opencv.pc file from the repo into PKG_CONFIG_PATH
   # trick part is to check for the vc12 folder and use that one
-  - cmd: dir C:\GTK\lib\pkgconfig
-  - cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (copy .\utils\opencv_x86.pc C:\GTK\lib\pkgconfig\opencv.pc) ELSE (copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig\opencv.pc)
-  - cmd: dir C:\GTK\lib\pkgconfig
+  #- cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (copy .\utils\opencv_x86.pc C:\GTK\lib\pkgconfig\opencv.pc) ELSE (copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig\opencv.pc)
 
 
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmd: ECHO "BUILDING binary package:"
-  - cmd: npm install --build-from-source --msvs_version=2013
-  - cmd: npm test
-  - cmd: node lib/opencv.js
+  #- cmd: npm install --build-from-source --msvs_version=2013
+  #- cmd: npm test
+  #- cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH binary package:"
-  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
-  - cmd: node-pre-gyp clean
-  - cmd: node-gyp clean
-  - cmd: rmdir /q /s node_modules
+  #- cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
+  #- cmd: node-pre-gyp clean
+  #- cmd: node-gyp clean
+  #- cmd: rmdir /q /s node_modules
 
 on_success:
   # test installing from binary package works
   - cmd: ECHO "ON SUCCESS:"
   - cmd: ECHO "Try installing from binary:"
-  - cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
+  #- cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
   # Print Available Binaries
-  - cmd: node-pre-gyp info
+  #- cmd: node-pre-gyp info
 
 test: OFF
 
