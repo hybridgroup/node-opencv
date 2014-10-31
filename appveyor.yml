@@ -41,7 +41,7 @@ install:
   - cmd: call nodist update
   - cmd: call nodist stable
   - cmd: npm install -g node-gyp
-  - cmd: npm install node-pre-gyp
+  #- cmd: npm install node-pre-gyp
   - cmd: npm install aws-sdk
   - cmd: SET APP_PATH=%CD%
   - cmd: IF EXIST C:\OpenCV* CD C:\OpenCV*
