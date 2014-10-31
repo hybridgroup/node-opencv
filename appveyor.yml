@@ -10,12 +10,12 @@ os: unstable
 
 # to add several platforms to build matrix:
 platform:
-  - x86
+  #- x86
   - x64
 
 install:
-  #- cmd: ECHO "INSTALL OPENCV:"
-  #- cmd: choco install OpenCV
+  - cmd: ECHO "INSTALL OPENCV:"
+  - cmd: choco install OpenCV
   - cmd: ECHO "APPVEYOR_REPO_COMMIT_MESSAGE ->"
   - cmd: ECHO %APPVEYOR_REPO_COMMIT_MESSAGE%
   - cmd: SET COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
@@ -37,25 +37,28 @@ install:
   - cmd: git clone https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
   - cmd: SET PATH=C:\nodist\bin;%PATH%
   - cmd: SET NODIST_PREFIX=C:\nodist
-  #- cmd: SET NODIST_X64=0
-  #- cmd: call nodist update
-  #- cmd: call nodist stable
+  - cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (SET NODIST_X64=0) ELSE (SET NODIST_X64=1)
+  - cmd: call nodist update
+  - cmd: call nodist stable
   #- cmd: npm install -g node-gyp
   #- cmd: npm install node-pre-gyp
   #- cmd: npm install aws-sdk
   - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%PATH%
+  - cmd: SET PATH=C:\OpenCV\opencv\buil;%PATH%
   - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
-  - cmd: dir C:\MinGW
-  - cmd: dir C:\GTK\lib
-  - cmd: dir C:\msys
+  - cmd: dir C:\GTK\lib\pkgconfig
+  # Here we need to copy the opencv.pc file from the repo into PKG_CONFIG_PATH
+  # trick part is to check for the vc12 folder and use that one
+  - cmd: copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig
+
 
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmd: ECHO "BUILDING binary package:"
-  #- cmd: npm install --build-from-source
-  #- cmd: npm test
-  #- cmd: node lib/opencv.js
+  - cmd: npm install --build-from-source
+  - cmd: npm test
+  - cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH binary package:"
   #- cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
   #- cmd: node-pre-gyp clean
