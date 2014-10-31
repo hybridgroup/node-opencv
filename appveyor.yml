@@ -40,16 +40,16 @@ install:
   - cmd: IF %PROCESSOR_ARCHITECTURE%==x86 (SET NODIST_X64=0) ELSE (SET NODIST_X64=1)
   - cmd: call nodist update
   - cmd: call nodist stable
-  #- cmd: npm install -g node-gyp
-  #- cmd: npm install node-pre-gyp
-  #- cmd: npm install aws-sdk
+  - cmd: npm install -g node-gyp
+  - cmd: npm install node-pre-gyp
+  - cmd: npm install aws-sdk
   - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%PATH%
   - cmd: SET PATH=C:\OpenCV\opencv\buil;%PATH%
   - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
   - cmd: dir C:\GTK\lib\pkgconfig
   # Here we need to copy the opencv.pc file from the repo into PKG_CONFIG_PATH
   # trick part is to check for the vc12 folder and use that one
-  - cmd: copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig
+  - cmd: copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig\opencv.pc
 
 
 
