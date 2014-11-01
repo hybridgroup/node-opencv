@@ -93,7 +93,8 @@ on_success:
   # test installing from binary package works
   - cmd: ECHO "ON SUCCESS:"
   - cmd: ECHO "Try installing from binary:"
-  - cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
+  #- cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
+  - cmd: npm install --fallback-to-build=false
   # Print Available Binaries
   - cmd: node-pre-gyp info
 
