@@ -50,6 +50,8 @@ before_build:
   - cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
   - cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%OPENCV_DIR%;%PATH%
   - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
+  - cmd: DIR %OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
+  - cmd: DIR %OPENCV_ROOT_PATH%\build\%ARCH%\vc12\lib
   # Here we need to copy the opencv.pc file from the repo into PKG_CONFIG_PATH
   # trick part is to check for the vc12 folder and use that one
   - cmd: copy .\utils\opencv_x64.pc C:\GTK\lib\pkgconfig\opencv.pc
@@ -63,6 +65,7 @@ build_script:
   - cmd: ECHO "PUBLISH x64 binary package:"
   - cmd: npm install aws-sdk
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
+  #- cmd: node-pre-gyp info
   - cmd: node-pre-gyp clean
   - cmd: node-gyp clean
   - cmd: npm uninstall -g node-gyp
@@ -96,7 +99,7 @@ on_success:
   #- cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
   - cmd: npm install --fallback-to-build=false
   # Print Available Binaries
-  - cmd: node-pre-gyp info
+  #- cmd: node-pre-gyp info
 
 test: OFF
 
